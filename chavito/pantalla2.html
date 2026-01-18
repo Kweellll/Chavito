@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DETECIN – Guía DEPAC (Pantalla 2)</title>
+  <style>
+    :root{
+      --bg:#f7f9fc; --card:#ffffff; --text:#0f172a; --muted:#64748b;
+      --blue:#2563eb; --blue-600:#1d4ed8; --red:#dc2626; --green:#0f9d58; --border:#e5e7eb;
+      --radius:14px; --maxw:480px;
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans"; background:var(--bg); color:var(--text); line-height:1.35}
+    .wrap{max-width:var(--maxw); margin-inline:auto; padding:16px}
+    header{display:flex; align-items:center; justify-content:space-between; gap:12px; margin:8px auto 16px}
+    .brand{font-weight:800; letter-spacing:.02em; color:var(--blue); font-size:18px}
+    .title{ text-align:center; font-size:20px; font-weight:800; margin:10px auto 6px }
+    .badge{ font-size:12px; color:var(--muted); border:1px solid var(--border); padding:4px 8px; border-radius:999px; background:#fff }
+
+    .card{ background:var(--card); border-radius:var(--radius); padding:14px; box-shadow:0 1px 4px rgba(0,0,0,.06); border:1px solid #f1f5f9; margin-bottom:14px }
+    .card h2{ font-size:16px; margin:4px 0 10px }
+    .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:10px }
+    .grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px }
+    @media(min-width:520px){ .title{font-size:24px} }
+
+    label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px }
+    input[type="text"], input[type="number"], input[type="tel"], select, textarea{
+      width:100%; padding:12px; border:1px solid var(--border); border-radius:10px; font-size:16px; background:#fff; min-height:44px
+    }
+    textarea{ min-height:96px; resize:vertical }
+
+    .warn{ background:#fee2e2; border:1px solid #fecaca; color:#7f1d1d; border-radius:12px; padding:12px }
+    .ok{ background:#ecfdf5; border:1px solid #d1fae5; color:#065f46; border-radius:12px; padding:12px }
+
+    .table{ width:100%; border-collapse:collapse; font-size:14px }
+    .table th,.table td{ padding:8px 10px; border-bottom:1px solid var(--border); text-align:left }
+    .table th{ background:#f8fafc }
+
+    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px }
+    .btn{ appearance:none; border:none; border-radius:12px; padding:12px 14px; font-weight:700; font-size:16px; cursor:pointer; min-height:44px; flex:1 1 auto }
+    .btn-primary{ background:var(--blue); color:#fff }
+    .btn-primary:hover{ background:var(--blue-600) }
+    .btn-secondary{ background:#e2e8f0; color:#0f172a }
+
+    .suffix{ position:relative }
+    .suffix input{ padding-right:42px }
+    .suffix .u{ position:absolute; right:10px; top:50%; transform:translateY(-50%); color:var(--muted) }
+
+    .hidden{ display:none }
+    .kv{ display:grid; grid-template-columns:1fr; gap:8px }
+    .kv dt{ font-size:12px; color:var(--muted) } .kv dd{ margin:0; font-weight:700 }
+    @media(min-width:520px){ .kv{ grid-template-columns:1fr 1fr } }
+
+    .result{ display:none; margin-top:12px; border:1px dashed #c7d2fe; background:#eef2ff; color:#1e293b; border-radius:12px; padding:12px }
+    .result.visible{ display:block }
+    .result h3{ margin:0 0 8px 0; font-size:16px; color:#1d4ed8 }
+
+    .imgph{width:100%; border:1px solid var(--border); border-radius:10px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header aria-label="Encabezado">
+      <div class="brand" aria-label="Nombre de la empresa">DETECIUN</div>
+      <div class="badge">bag: 2</div>
+    </header>
+
+    <h1 class="title">Guía de instalación de sellos mecánicos DEPAC</h1>
+
+    <!-- Resumen OT -->
+    <section class="card" aria-labelledby="ot-title">
+      <h2 id="ot-title">Resumen de OT</h2>
+      <dl class="kv" id="ot-resumen">
+        <div><dt>Cliente</dt><dd id="ot-cliente">—</dd></div>
+        <div><dt>Planta</dt><dd id="ot-planta">—</dd></div>
+        <div><dt>Área</dt><dd id="ot-area">—</dd></div>
+        <div><dt>Equipo</dt><dd id="ot-equipo">—</dd></div>
+        <div><dt>Marca</dt><dd id="ot-marca">—</dd></div>
+        <div><dt>Tag</dt><dd id="ot-tag">—</dd></div>
+        <div><dt>info</dt><dd id="ot-info">—</dd></div>
+      </dl>
+      <div class="warn" style="margin-top:10px">
+        <ul style="margin:0 0 0 18px">
+          <li>“No retirar el sello de su empaque hasta el momento de instalación (evitar daños).”</li>
+          <li>“Mantener el área de trabajo limpia y libre de objetos.”</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 1. Registro de personal -->
+    <section class="card" aria-labelledby="p-title">
+      <h2 id="p-title">1. Registro de personal</h2>
+      <div class="grid-2">
+        <div>
+          <label for="lider_nombre">1.Mecánico líder – Nombre</label>
+          <input id="lider_nombre" type="text" />
+          <label for="lider_tel">Teléfono</label>
+          <input id="lider_tel" type="tel" inputmode="numeric" />
+          <label for="lider_puesto">Puesto</label>
+          <input id="lider_puesto" type="text" />
+        </div>
+        <div>
+          <label for="m1_nombre">2.Mecánico 1 – Nombre</label>
+          <input id="m1_nombre" type="text" />
+          <label for="m1_tel">Teléfono</label>
+          <input id="m1_tel" type="tel" inputmode="numeric" />
+          <label for="m1_puesto">Puesto</label>
+          <input id="m1_puesto" type="text" />
+        </div>
+        <div>
+          <label for="m2_nombre">3.Mecánico 2 – Nombre</label>
+          <input id="m2_nombre" type="text" />
+          <label for="m2_tel">Teléfono</label>
+          <input id="m2_tel" type="tel" inputmode="numeric" />
+          <label for="m2_puesto">Puesto</label>
+          <input id="m2_puesto" type="text" />
+        </div>
+        <div>
+          <label for="sup_nombre">4.Supervisor de mantenimiento – Nombre</label>
+          <input id="sup_nombre" type="text" />
+          <label for="sup_tel">Teléfono</label>
+          <input id="sup_tel" type="tel" inputmode="numeric" />
+          <label for="sup_puesto">Puesto</label>
+          <input id="sup_puesto" type="text" />
+        </div>
+        <div>
+          <label for="jefe_nombre">5.Jefe de mantenimiento a cargo – Nombre</label>
+          <input id="jefe_nombre" type="text" />
+          <label for="jefe_tel">Teléfono</label>
+          <input id="jefe_tel" type="tel" inputmode="numeric" />
+          <label for="jefe_puesto">Puesto</label>
+          <input id="jefe_puesto" type="text" />
+        </div>
+      </div>
+      <div style="margin-top:10px">
+        <label for="otros">6.Otros a cargo</label>
+        <textarea id="otros" placeholder="Nombres, teléfonos y puestos..."></textarea>
+      </div>
+    </section>
+
+    <!-- 2. Checklist de dimensiones -->
+    <section class="card" aria-labelledby="d-title">
+      <h2 id="d-title">2. Checklist de dimensiones (bomba desarmada)</h2>
+      <div class="grid-2">
+        <div>
+          <label for="estilo_sello">Estilo del sello</label>
+          <input id="estilo_sello" type="text" placeholder="Ej. DEPAC 301P" />
+        </div>
+        <div>
+          <label for="codigo_dtc">Código DTC del sello</label>
+          <input id="codigo_dtc" type="text" placeholder="Ej. DTC-301P-45" />
+        </div>
+      </div>
+
+      <!-- Medidas del sello -->
+      <div style="margin-top:10px">
+        <h3 style="font-size:14px; margin:0 0 6px">Medida nominal del sello (mm)</h3>
+        <input id="medida_nominal" type="text" placeholder="Ej. 45 mm" />
+
+        <label>Medida real del sello</label>
+        <div class="grid-3">
+            <input id="sello_real_1" type="text" placeholder="mm" />
+            <input id="sello_real_2" type="text" placeholder="mm" />
+            <input id="sello_real_3" type="text" placeholder="mm" />
+        </div>
+      </div>
+
+      <!-- Medidas de la bocina -->
+      <div style="margin-top:10px">
+        <h3 style="font-size:14px; margin:0 0 6px">Medida nominal de bocina (mm)</h3>
+        <input id="bocina_nominal" type="text" placeholder="Ej. 45 mm" />
+        
+        <label>Medida real de bocina</label>
+        <div class="grid-3">
+            <input id="bocina_real_1" type="text" placeholder="mm" />
+            <input id="bocina_real_2" type="text" placeholder="mm" />
+            <input id="bocina_real_3" type="text" placeholder="mm" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 2.1 Bordes biselados -->
+    <div style="margin-top:14px">
+        <h3 style="font-size:14px; margin:0 0 6px">2.1 Bordes biselados</h3>
+        <li>De 20° a 30° y una profundidad de 2–3 mm.</li>
+        <div class="warn" style="margin-bottom:10px">
+          <ul style="margin:0 0 0 18px">
+            <li>Evitar cortes o daños en los O-rings al instalar el sello.</li>
+            <li>Facilitar el deslizamiento del sello en el montaje.</li>
+            <li>Prevenir que el sello se enganche en aristas vivas.</li>
+          </ul>
+        </div>
+        <div class="ok" style="margin-bottom:10px">
+          API 682, 4ª edición (2014) lo menciona en la Sección 8.3.3 / ISO 21049: Especifican que los bordes de entrada deben estar libres de aristas vivas y con biseles adecuados (20°–30°).
+        </div>
+        <label for="bisel_metodo">¿Con qué se midió?</label>
+        <select id="bisel_metodo">
+          <option value="">Seleccione…</option>
+          <option value="transportador">Transportador</option>
+          <option value="plantilla">Plantilla de ángulos</option>
+          <option value="tabla">Toma de medidas (tabla)</option>
+        </select>
+        <div id="bisel_transportador" class="hidden" style="margin-top:8px">
+          <img class="imgph" src="img/transportador.png" alt="Transportador" />
+        </div>
+        <div id="bisel_plantilla" class="hidden" style="margin-top:8px">
+          <img class="imgph" src="img/plantilla.png" alt="Plantilla de ángulos" />
+        </div>
+        <div id="bisel_tabla" class="hidden" style="margin-top:8px">
+          <table class="table">
+            <thead><tr><th>Ángulo (°)</th><th>h con L=2 mm</th><th>h con L=3 mm</th></tr></thead>
+            <tbody>
+              <tr><td>15°</td><td>0.54 mm</td><td>0.80 mm</td></tr>
+              <tr><td>20°</td><td>0.73 mm</td><td>1.09 mm</td></tr>
+              <tr><td>25°</td><td>0.93 mm</td><td>1.40 mm</td></tr>
+              <tr><td>30°</td><td>1.15 mm</td><td>1.73 mm</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:10px">
+          <span style="display:block; font-size:12px; color:var(--muted); margin-bottom:6px">¿Cumple con biselado?</span>
+          <label style="margin-right:10px"><input type="radio" name="bisel_cumple" value="si"> Sí</label>
+          <label><input type="radio" name="bisel_cumple" value="no"> No</label>
+        </div>
+      </div>
+
+      <!-- Rugosidad de bocina -->
+      <div style="margin-top:14px">
+        <h3 style="font-size:14px; margin:0 0 6px">Rugosidad de bocina</h3>
+        <div class="warn" style="margin-bottom:10px">Advertencia: superficies ásperas pueden dañar O‑rings/labios y comprometer la estanqueidad.</div>
+        <label for="rug_bocina_metodo">¿Con qué se midió?</label>
+        <select id="rug_bocina_metodo">
+          <option value="">Seleccione…</option>
+          <option value="rugosimetro">Rugosímetro</option>
+          <option value="placa">Placa patrón</option>
+        </select>
+        <div id="rug_bocina_valor_wrap" class="hidden" style="margin-top:8px">
+          <label for="rug_bocina_valor">Valor medido</label>
+          <div class="suffix">
+            <input id="rug_bocina_valor" type="text" placeholder="Ej. 1.2" />
+            <span class="u">µm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Observaciones en bocina -->
+      <div style="margin-top:14px">
+        <h3 style="font-size:14px; margin:0 0 6px">Observaciones en bocina</h3>
+        <div>
+          <label style="margin-right:10px"><input type="radio" name="obs_bocina" value="sin"> Sin defectos</label>
+          <label style="margin-right:10px"><input type="radio" name="obs_bocina" value="defectos"> Con defectos</label>
+          <label><input type="radio" name="obs_bocina" value="prisioneros"> Con marcas de prisioneros</label>
+        </div>
+        <div id="obs_defectos" class="hidden" style="margin-top:8px">
+          <label for="obs_texto">Detalle de defectos</label>
+          <textarea id="obs_texto" placeholder="Describa los defectos…"></textarea>
+        </div>
+        <div id="obs_marcas" class="hidden" style="margin-top:8px">
+          <label for="obs_cant">Cantidad de marcas</label>
+          <input id="obs_cant" type="number" min="0" step="1" placeholder="0" />
+        </div>
+      </div>
+
+      <!-- Rugosidad de junta -->
+      <div style="margin-top:14px">
+        <h3 style="font-size:14px; margin:0 0 6px">Rugosidad de junta</h3>
+        <div style="font-size:13px; color:var(--muted); margin-bottom:6px">API 682 indica Ra ≤ 3.2 µm.</div>
+        <label for="rug_junta">¿Cumple?</label>
+        <select id="rug_junta">
+          <option value="">Seleccione…</option>
+          <option value="si">Sí cumple</option>
+          <option value="no">No cumple</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- 3. Navegación -->
+    <section class="card">
+      <div class="actions">
+        <button id="btn-atras" class="btn btn-secondary" type="button">Atrás</button>
+        <button id="btn-guardar" class="btn btn-secondary" type="button">Guardar borrador</button>
+        <button id="btn-continuar" class="btn btn-primary" type="button">Continuar</button>
+      </div>
+    </section>
+
+    <!-- Resumen (oculto hasta Continuar) -->
+    <section id="resumen" class="result" aria-live="polite">
+      <h3>Resumen de datos ingresados</h3>
+      <pre id="salida"></pre>
+      <h3>Recomendaciones técnicas</h3>
+      <ul style="margin:0 0 0 18px">
+        <li>Mantener limpieza del área durante todo el montaje.</li>
+        <li>Verificar biselado 20°–30° y ausencia de aristas vivas.</li>
+        <li>Confirmar rugosidad adecuada de bocina y junta antes de instalar.</li>
+        <li>Revisar integridad de O‑rings y componentes antes del cierre.</li>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+    // Cargar OT guardada por Pantalla 1
+    (function cargarOT(){
+      try{
+        const ot = JSON.parse(localStorage.getItem('ot_v1')||'{}');
+        const set = (id,val)=>{ const el=document.getElementById(id); if(el) el.textContent = (val && String(val).trim()) ? val : '—'; };
+        set('ot-cliente', ot.cliente);
+        set('ot-planta',  ot.planta);
+        set('ot-area',    ot.area);
+        set('ot-equipo',  ot.equipo);
+        set('ot-marca',   ot.marca);
+        set('ot-tag',     ot.tag);
+      }catch(_){/* noop */}
+    })();
+
+    // Navegación Atrás (con fallback)
+    document.getElementById('btn-atras').addEventListener('click',()=>{
+      if(history.length>1) history.back(); else window.location.href='pantalla1.html';
+    });
+
+    // Helpers UI condicional
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+    const show = el => el.classList.remove('hidden');
+    const hide = el => el.classList.add('hidden');
+
+    // Bisel: método
+    $('#bisel_metodo').addEventListener('change', e => {
+      const v = e.target.value;
+      ['#bisel_transportador','#bisel_plantilla','#bisel_tabla'].forEach(sel=>hide($(sel)));
+      if(v==='transportador') show($('#bisel_transportador'));
+      if(v==='plantilla') show($('#bisel_plantilla'));
+      if(v==='tabla') show($('#bisel_tabla'));
+    });
+
+    // Rugosidad bocina: método
+    $('#rug_bocina_metodo').addEventListener('change', e => {
+      e.target.value ? show($('#rug_bocina_valor_wrap')) : hide($('#rug_bocina_valor_wrap'));
+    });
+
+    // Observaciones bocina
+    $$('input[name="obs_bocina"]').forEach(r=>r.addEventListener('change',()=>{
+      const val = ($$('input[name="obs_bocina"]:checked')[0]||{}).value || '';
+      if(val==='defectos'){ show($('#obs_defectos')); hide($('#obs_marcas')); }
+      else if(val==='prisioneros'){ hide($('#obs_defectos')); show($('#obs_marcas')); }
+      else{ hide($('#obs_defectos')); hide($('#obs_marcas')); }
+    }));
+
+    // Guardar borrador local
+    const KEY='pantalla2_borrador_v1';
+    $('#btn-guardar').addEventListener('click', ()=>{
+      const data = recogerDatos();
+      try{ localStorage.setItem(KEY, JSON.stringify(data)); alert('Borrador guardado.'); }catch(_){ alert('No se pudo guardar.'); }
+    });
+
+    // Continuar: mostrar resumen dentro de esta misma pantalla
+    $('#btn-continuar').addEventListener('click', ()=>{
+      const data = recogerDatos();
+      const lines = [];
+      const v = x => (x && String(x).trim()) ? String(x).trim() : '—';
+
+      lines.push('— OT —');
+      lines.push(`Cliente: ${v($('#ot-cliente').textContent)}`);
+      lines.push(`Planta: ${v($('#ot-planta').textContent)}`);
+      lines.push(`Área: ${v($('#ot-area').textContent)}`);
+      lines.push(`Equipo: ${v($('#ot-equipo').textContent)}`);
+      lines.push(`Marca: ${v($('#ot-marca').textContent)}`);
+      lines.push(`Tag: ${v($('#ot-tag').textContent)}`);
+
+      lines.push('\n— Personal —');
+      lines.push(`Líder: ${v(data.lider_nombre)} | ${v(data.lider_tel)} | ${v(data.lider_puesto)}`);
+      lines.push(`Mecánico 1: ${v(data.m1_nombre)} | ${v(data.m1_tel)} | ${v(data.m1_puesto)}`);
+      lines.push(`Mecánico 2: ${v(data.m2_nombre)} | ${v(data.m2_tel)} | ${v(data.m2_puesto)}`);
+      lines.push(`Supervisor: ${v(data.sup_nombre)} | ${v(data.sup_tel)} | ${v(data.sup_puesto)}`);
+      lines.push(`Jefe mant.: ${v(data.jefe_nombre)} | ${v(data.jefe_tel)} | ${v(data.jefe_puesto)}`);
+      lines.push(`Otros: ${v(data.otros)}`);
+
+      lines.push('\n— Dimensiones —');
+      lines.push(`Estilo de sello: ${v(data.estilo_sello)}`);
+      lines.push(`Código DTC: ${v(data.codigo_dtc)}`);
+      lines.push(`Medida nominal: ${v(data.medida_nominal)}`);
+      lines.push(`Medidas reales sello: ${[v(data.sello_real_1), v(data.sello_real_2), v(data.sello_real_3)].join(' / ')}`);
+      lines.push(`Bocina (nominal): ${v(data.bocina_nominal)}`);
+      lines.push(`Bocina (reales): ${[v(data.bocina_real_1), v(data.bocina_real_2), v(data.bocina_real_3)].join(' / ')}`);
+      lines.push(`Bisel – método: ${v(data.bisel_metodo || '')}`);
+      lines.push(`Bisel – cumple: ${v(data.bisel_cumple || '')}`);
+      lines.push(`Rugosidad bocina – método: ${v(data.rug_bocina_metodo || '')}`);
+      lines.push(`Rugosidad bocina – valor: ${data.rug_bocina_metodo ? v(data.rug_bocina_valor)+' µm' : '—'}`);
+      lines.push(`Observaciones bocina: ${obsTexto(data)}`);
+      lines.push(`Rugosidad de junta: ${v(data.rug_junta || '')}`);
+
+      document.getElementById('salida').textContent = lines.join('\n');
+      document.getElementById('resumen').classList.add('visible');
+      document.getElementById('resumen').scrollIntoView({behavior:'smooth'});
+    });
+
+    function recogerDatos(){
+      const g = id => document.getElementById(id)?.value || '';
+      const r = name => ($$("input[name='"+name+"']:checked")[0]||{}).value || '';
+      return {
+        lider_nombre:g('lider_nombre'), lider_tel:g('lider_tel'), lider_puesto:g('lider_puesto'),
+        m1_nombre:g('m1_nombre'), m1_tel:g('m1_tel'), m1_puesto:g('m1_puesto'),
+        m2_nombre:g('m2_nombre'), m2_tel:g('m2_tel'), m2_puesto:g('m2_puesto'),
+        sup_nombre:g('sup_nombre'), sup_tel:g('sup_tel'), sup_puesto:g('sup_puesto'),
+        jefe_nombre:g('jefe_nombre'), jefe_tel:g('jefe_tel'), jefe_puesto:g('jefe_puesto'),
+        otros:g('otros'),
+        estilo_sello:g('estilo_sello'), codigo_dtc:g('codigo_dtc'), medida_nominal:g('medida_nominal'),
+        sello_real_1:g('sello_real_1'), sello_real_2:g('sello_real_2'), sello_real_3:g('sello_real_3'),
+        bocina_nominal:g('bocina_nominal'), bocina_real_1:g('bocina_real_1'), bocina_real_2:g('bocina_real_2'), bocina_real_3:g('bocina_real_3'),
+        bisel_metodo:document.getElementById('bisel_metodo').value,
+        bisel_cumple:r('bisel_cumple'),
+        rug_bocina_metodo:document.getElementById('rug_bocina_metodo').value,
+        rug_bocina_valor:g('rug_bocina_valor'),
+        obs_bocina:r('obs_bocina'), obs_texto:g('obs_texto'), obs_cant:g('obs_cant'),
+        rug_junta:document.getElementById('rug_junta').value
+      };
+    }
+
+    function obsTexto(d){
+      if(d.obs_bocina==='defectos') return (d.obs_texto||'—');
+      if(d.obs_bocina==='prisioneros') return `Marcas de prisioneros: ${d.obs_cant||'0'}`;
+      if(d.obs_bocina==='sin') return 'Sin defectos';
+      return '—';
+    }
+
+    // Restaurar borrador si existe
+    (function restaurar(){
+      try{
+        const d = JSON.parse(localStorage.getItem('pantalla2_borrador_v1')||'null');
+        if(!d) return;
+        const set=(id,val)=>{ const el=document.getElementById(id); if(el) el.value=val||'' };
+        set('lider_nombre', d.lider_nombre); set('lider_tel', d.lider_tel); set('lider_puesto', d.lider_puesto);
+        set('m1_nombre', d.m1_nombre); set('m1_tel', d.m1_tel); set('m1_puesto', d.m1_puesto);
+        set('m2_nombre', d.m2_nombre); set('m2_tel', d.m2_tel); set('m2_puesto', d.m2_puesto);
+        set('sup_nombre', d.sup_nombre); set('sup_tel', d.sup_tel); set('sup_puesto', d.sup_puesto);
+        set('jefe_nombre', d.jefe_nombre); set('jefe_tel', d.jefe_tel); set('jefe_puesto', d.jefe_puesto);
+        set('otros', d.otros);
+        set('estilo_sello', d.estilo_sello); set('codigo_dtc', d.codigo_dtc); set('medida_nominal', d.medida_nominal);
+        set('sello_real_1', d.sello_real_1); set('sello_real_2', d.sello_real_2); set('sello_real_3', d.sello_real_3);
+        set('bocina_nominal', d.bocina_nominal); set('bocina_real_1', d.bocina_real_1); set('bocina_real_2', d.bocina_real_2); set('bocina_real_3', d.bocina_real_3);
+        if(d.bisel_metodo) document.getElementById('bisel_metodo').value = d.bisel_metodo;
+        if(d.rug_bocina_metodo) document.getElementById('rug_bocina_metodo').value = d.rug_bocina_metodo;
+        document.getElementById('rug_bocina_metodo').dispatchEvent(new Event('change'));
+        if(d.obs_bocina){ const el = document.querySelector(`input[name='obs_bocina'][value='${d.obs_bocina}']`); if(el){ el.checked = true; el.dispatchEvent(new Event('change')); } }
+        if(d.rug_junta) document.getElementById('rug_junta').value = d.rug_junta;
+      }catch(_){/* noop */}
+    })();
+  </script>
+</body>
+</html>
